@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blockly with Custom Blocks</title>
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <script src="https://unpkg.com/blockly/blocks.min.js"></script>
+  <script src="https://unpkg.com/blockly/msg/js/en.js"></script> <!-- Include language pack for block translations -->
+</head>
+<body>
+  <div>
+    <button id="greenFlagButton">Green Flag</button>
+  </div>
+  <h1>Scratch JS Beta</h1>
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <xml id="toolbox" style="display: none;">
+    <block type="controls_if"></block>
+    <block type="math_number"></block>
+    <block type="text"></block>
+    <block type="custom_say"></block>
+  </xml>
+
+  <script>
+    // Define the custom say block
+    Blockly.Blocks['custom_say'] = {
+      init: function() {
+        this.appendValueInput('TEXT')
+            .setCheck('String')
+            .appendField("Say");
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(160);
+        this.setTooltip("Display an alert message");
+      }
+    };
+
+    // Define the corresponding JavaScript code generator for the custom say block
+    Blockly.JavaScript['custom_say'] = function(block) {
+      var text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
+      var code = `alert(${text});\n`;
+      return code;
+    };
+
+    // Initialize Blockly
+    var workspace = Blockly.inject('blocklyDiv', {
+      media: 'https://unpkg.com/blockly/media/',
+      toolbox: document.getElementById('toolbox')
+    });
+
+    // Execute the blocks when the green flag button is clicked
+    document.getElementById('greenFlagButton').addEventListener('click', function() {
+      Blockly.JavaScript.addReservedWords('code'); // Avoid variable collision with 'code' in generated JavaScript
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      try {
+        eval(code);
+      } catch (error) {
+        console.error('Error executing blocks:', error);
+      }
+    });
+  </script>
+</body>
+</html>
