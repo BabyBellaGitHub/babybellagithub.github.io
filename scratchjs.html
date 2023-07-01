@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blockly with Custom Blocks</title>
+  <title>Scratch JS</title>
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
   <script src="https://unpkg.com/blockly/blocks.min.js"></script>
   <script src="https://unpkg.com/blockly/msg/js/en.js"></script> <!-- Include language pack for block translations -->
 </head>
 <body>
   <div>
+    <h1>Scratch JS 1.0</h1>
     <button id="greenFlagButton">Green Flag</button>
   </div>
-  <h1>Scratch JS Beta</h1>
   <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
   <xml id="toolbox" style="display: none;">
-    <block type="controls_if"></block>
-    <block type="math_number"></block>
-    <block type="text"></block>
-    <block type="custom_say"></block>
+    <category name="Control" colour="120">
+      <block type="controls_if"></block>
+    </category>
+    <category name="Math" colour="230">
+      <block type="math_number"></block>
+    </category>
+    <category name="Text" colour="160">
+      <block type="text"></block>
+    </category>
+    <category name="Comment" colour="160">
+      <block type="custom_comment"></block>
+    </category>
   </xml>
 
   <script>
-    // Define the custom say block
-    Blockly.Blocks['custom_say'] = {
+    // Define the custom comment block
+    Blockly.Blocks['custom_comment'] = {
       init: function() {
-        this.appendValueInput('TEXT')
-            .setCheck('String')
-            .appendField("Say");
-        this.setInputsInline(true);
+        this.appendDummyInput()
+            .appendField("comment")
+            .appendField(new Blockly.FieldTextInput(''), 'TEXT');
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(160);
-        this.setTooltip("Display an alert message");
+        this.setTooltip("Add a comment to your code");
       }
     };
 
-    // Define the corresponding JavaScript code generator for the custom say block
-    Blockly.JavaScript['custom_say'] = function(block) {
-      var text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
-      var code = `alert(${text});\n`;
-      return code;
+    // Define the corresponding JavaScript code generator for the custom comment block
+    Blockly.JavaScript['custom_comment'] = function(block) {
+      var text = block.getFieldValue('TEXT');
+      return `// ${text}\n`;
     };
 
     // Initialize Blockly
