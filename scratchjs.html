@@ -2,8 +2,55 @@
 <html>
 <head>
   <title>Scratch JS</title>
-
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
 </head>
-<p>WARNING: BIG UPDATE COMMING SOON</p>
+<body>
+  <h1>Scratch JS 1.1</h1>
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+
+  <xml id="toolbox" style="display: none">
+    <!-- Category 1: Logic Blocks -->
+    <category name="Logic" colour="#5C81A6">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+    </category>
+
+    <!-- Category 2: Loops Blocks -->
+    <category name="Loops" colour="#5CA65C">
+      <block type="controls_repeat_ext"></block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for"></block>
+      <block type="controls_forEach"></block>
+    </category>
+
+    <!-- Category 3: Math Blocks -->
+    <category name="Math" colour="#5C68A6">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="math_random_int"></block>
+      <block type="math_trig"></block>
+    </category>
+
+    <!-- Category 4: Variables Blocks -->
+    <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+
+    <!-- Category 5: Functions Blocks -->
+    <category name="Functions" colour="#A65C5C" custom="PROCEDURE"></category>
+  </xml>
+
+  <script>
+    function initBlockly() {
+      var workspace = Blockly.inject('blocklyDiv', {
+        toolbox: document.getElementById('toolbox')
+      });
+
+      // You can add code here to further customize the Blockly workspace.
+    }
+
+    window.addEventListener('load', initBlockly);
+  </script>
 </body>
 </html>
