@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Pet Simulation</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Virtual Pet Simulation</h1>
+<div>
+    <h2 id="petName"></h2>
+    <p>Hunger: <span id="hunger">50</span></p>
+    <p>Happiness: <span id="happiness">50</span></p>
+    <button id="feedBtn">Feed</button>
+    <button id="playBtn">Play</button>
+</div>
+<script>
+    const pet = {
+        name: prompt("Enter your pet's name:"),
+        hunger: 50,
+        happiness: 50
+    };
+
+    const petNameElement = document.getElementById("petName");
+    const hungerElement = document.getElementById("hunger");
+    const happinessElement = document.getElementById("happiness");
+    const feedButton = document.getElementById("feedBtn");
+    const playButton = document.getElementById("playBtn");
+
+    petNameElement.textContent = pet.name;
+
+    function updateUI() {
+        hungerElement.textContent = pet.hunger;
+        happinessElement.textContent = pet.happiness;
+    }
+
+    function feedPet() {
+        pet.hunger -= 10;
+        pet.happiness += 5;
+        updateUI();
+    }
+
+    function playWithPet() {
+        pet.hunger += 5;
+        pet.happiness += 10;
+        updateUI();
+    }
+
+    feedButton.addEventListener("click", feedPet);
+    playButton.addEventListener("click", playWithPet);
+
+    updateUI();
+</script>
+</body>
+</html>
